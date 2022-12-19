@@ -1,4 +1,4 @@
-package com.jhbb.tracker_presentation.components
+package com.jhbb.tracker_presentation.tracker_overview.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.jhbb.tracker_presentation.tracker_overview.components.parseDateText
 import com.plcoding.tracker_presentation.R
 import java.time.LocalDate
 
