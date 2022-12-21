@@ -27,7 +27,7 @@ fun ExpandableMeal(
     meal: Meal,
     onToggleClick: () -> Unit,
     content: @Composable () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
 ) {
     val spacing = LocalSpacing.current
     val context = LocalContext.current
