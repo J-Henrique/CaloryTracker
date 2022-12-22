@@ -24,31 +24,33 @@ fun NutrientsBar(
 ) {
     val background = MaterialTheme.colors.background
     val caloriesExceedColor = MaterialTheme.colors.error
-    val carbsWidthRatio = remember { Animatable(0f) }
-    val proteinWidthRatio = remember { Animatable(0f) }
-    val fatWidthRatio = remember { Animatable(0f) }
-
+    val carbWidthRatio = remember {
+        Animatable(0f)
+    }
+    val proteinWidthRatio = remember {
+        Animatable(0f)
+    }
+    val fatWidthRatio = remember {
+        Animatable(0f)
+    }
     LaunchedEffect(key1 = carbs) {
-        carbsWidthRatio.animateTo(
-            // 1 gr of carb has 4 kilocalories
+        carbWidthRatio.animateTo(
             targetValue = ((carbs * 4f) / calorieGoal)
         )
     }
     LaunchedEffect(key1 = protein) {
         proteinWidthRatio.animateTo(
-            // 1 gr of protein has 4 kilocalories
-            targetValue = ((carbs * 4f) / calorieGoal)
+            targetValue = ((protein * 4f) / calorieGoal)
         )
     }
     LaunchedEffect(key1 = fat) {
         fatWidthRatio.animateTo(
-            // 1 gr of fat has 9 kilocalories
-            targetValue = ((carbs * 9f) / calorieGoal)
+            targetValue = ((fat * 9f) / calorieGoal)
         )
     }
     Canvas(modifier = modifier) {
-        if (calories <= calorieGoal) {
-            val carbsWidth = carbsWidthRatio.value * size.width
+        if(calories <= calorieGoal) {
+            val carbsWidth = carbWidthRatio.value * size.width
             val proteinWidth = proteinWidthRatio.value * size.width
             val fatWidth = fatWidthRatio.value * size.width
             drawRoundRect(

@@ -20,8 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TrackerOverviewViewModel @Inject constructor(
-    private val preferences: Preferences,
-    private val trackerUseCases: TrackerUseCases
+    preferences: Preferences,
+    private val trackerUseCases: TrackerUseCases,
 ): ViewModel() {
 
     var state by mutableStateOf(TrackerOverviewState())
@@ -33,20 +33,21 @@ class TrackerOverviewViewModel @Inject constructor(
     private var getFoodsForDateJob: Job? = null
 
     init {
+        refreshFoods()
         preferences.saveShouldShowOnboarding(false)
     }
 
     fun onEvent(event: TrackerOverviewEvent) {
-        when (event) {
+        when(event) {
             is TrackerOverviewEvent.OnAddFoodClick -> {
                 viewModelScope.launch {
                     _uiEvent.send(
                         UiEvent.Navigate(
                             route = Route.SEARCH
-                            + "/${event.meal.mealType.name}"
-                            + "/${state.date.dayOfMonth}"
-                            + "/${state.date.monthValue}"
-                            + "/${state.date.year}"
+                                    + "/${event.meal.mealType.name}"
+                                    + "/${state.date.dayOfMonth}"
+                                    + "/${state.date.monthValue}"
+                                    + "/${state.date.year}"
                         )
                     )
                 }
@@ -57,13 +58,13 @@ class TrackerOverviewViewModel @Inject constructor(
                     refreshFoods()
                 }
             }
-            TrackerOverviewEvent.OnNextDayClick -> {
+            is TrackerOverviewEvent.OnNextDayClick -> {
                 state = state.copy(
                     date = state.date.plusDays(1)
                 )
                 refreshFoods()
             }
-            TrackerOverviewEvent.OnPreviousDayClick -> {
+            is TrackerOverviewEvent.OnPreviousDayClick -> {
                 state = state.copy(
                     date = state.date.minusDays(1)
                 )
@@ -72,7 +73,7 @@ class TrackerOverviewViewModel @Inject constructor(
             is TrackerOverviewEvent.OnToggleMealClick -> {
                 state = state.copy(
                     meals = state.meals.map {
-                        if (it.name == event.meal.name) {
+                        if(it.name == event.meal.name) {
                             it.copy(isExpanded = !it.isExpanded)
                         } else it
                     }

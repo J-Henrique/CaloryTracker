@@ -19,21 +19,19 @@ import com.plcoding.tracker_presentation.R
 @Composable
 fun TrackerOverviewScreen(
     onNavigate: (UiEvent.Navigate) -> Unit,
-    viewModel: TrackerOverviewViewModel = hiltViewModel(),
+    viewModel: TrackerOverviewViewModel = hiltViewModel()
 ) {
     val spacing = LocalSpacing.current
     val state = viewModel.state
     val context = LocalContext.current
-
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
-            when (event) {
+            when(event) {
                 is UiEvent.Navigate -> onNavigate(event)
                 else -> Unit
             }
         }
     }
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -73,7 +71,8 @@ fun TrackerOverviewScreen(
                                 trackedFood = food,
                                 onDeleteClick = {
                                     viewModel.onEvent(
-                                        TrackerOverviewEvent.OnDeleteTrackedFoodClick(food)
+                                        TrackerOverviewEvent
+                                            .OnDeleteTrackedFoodClick(food)
                                     )
                                 }
                             )
@@ -81,10 +80,13 @@ fun TrackerOverviewScreen(
                         }
                         AddButton(
                             text = stringResource(
-                                id = R.string.add_meal, meal.name.asString(context)
+                                id = R.string.add_meal,
+                                meal.name.asString(context)
                             ),
                             onClick = {
-                                viewModel.onEvent(TrackerOverviewEvent.OnAddFoodClick(meal))
+                                viewModel.onEvent(
+                                    TrackerOverviewEvent.OnAddFoodClick(meal)
+                                )
                             },
                             modifier = Modifier.fillMaxWidth()
                         )

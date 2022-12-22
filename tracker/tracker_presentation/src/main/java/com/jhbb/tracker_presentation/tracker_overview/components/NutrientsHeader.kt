@@ -7,7 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment.Companion.Bottom
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -24,7 +24,7 @@ import com.plcoding.tracker_presentation.R
 @Composable
 fun NutrientsHeader(
     state: TrackerOverviewState,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val spacing = LocalSpacing.current
     val animatedCalorieCount = animateIntAsState(
@@ -55,7 +55,7 @@ fun NutrientsHeader(
                 amountColor = MaterialTheme.colors.onPrimary,
                 amountTextSize = 40.sp,
                 unitColor = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.align(Bottom)
+                modifier = Modifier.align(Alignment.Bottom)
             )
             Column {
                 Text(
@@ -64,11 +64,11 @@ fun NutrientsHeader(
                     color = MaterialTheme.colors.onPrimary
                 )
                 UnitDisplay(
-                    amount = animatedCalorieCount.value,
+                    amount = state.caloriesGoal,
                     unit = stringResource(id = R.string.kcal),
                     amountColor = MaterialTheme.colors.onPrimary,
                     amountTextSize = 40.sp,
-                    unitColor = MaterialTheme.colors.onPrimary
+                    unitColor = MaterialTheme.colors.onPrimary,
                 )
             }
         }

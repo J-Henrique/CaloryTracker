@@ -37,7 +37,7 @@ fun SearchTextField(
     modifier: Modifier = Modifier,
     hint: String = stringResource(id = R.string.search),
     shouldShowHint: Boolean = false,
-    onFocusChanged: (FocusState) -> Unit,
+    onFocusChanged: (FocusState) -> Unit
 ) {
     val spacing = LocalSpacing.current
     Box(

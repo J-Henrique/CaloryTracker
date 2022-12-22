@@ -83,7 +83,8 @@ fun TrackedFoodItem(
             Text(
                 text = stringResource(
                     id = R.string.nutrient_info,
-                    trackedFood.amount, trackedFood.calories
+                    trackedFood.amount,
+                    trackedFood.calories
                 ),
                 style = MaterialTheme.typography.body2
             )

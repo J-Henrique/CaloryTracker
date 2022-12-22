@@ -29,34 +29,34 @@ class SearchViewModel @Inject constructor(
     val uiEvent = _uiEvent.receiveAsFlow()
 
     fun onEvent(event: SearchEvent) {
-        when (event) {
+        when(event) {
+            is SearchEvent.OnQueryChange -> {
+                state = state.copy(query = event.query)
+            }
             is SearchEvent.OnAmountForFoodChange -> {
                 state = state.copy(
                     trackableFoods = state.trackableFoods.map {
-                        if (it.food == event.food) {
-                            it.copy(amount = filterOutDigits(it.amount))
+                        if(it.food == event.food) {
+                            it.copy(amount = filterOutDigits(event.amount))
                         } else it
                     }
                 )
             }
-            is SearchEvent.OnQueryChange -> {
-                state = state.copy(query = event.query)
-            }
-            SearchEvent.OnSearch -> {
+            is SearchEvent.OnSearch -> {
                 executeSearch()
-            }
-            is SearchEvent.OnSearchFocusChange -> {
-                state = state.copy(
-                    isHintVisible = !event.isFocused && state.query.isBlank()
-                )
             }
             is SearchEvent.OnToggleTrackableFood -> {
                 state = state.copy(
                     trackableFoods = state.trackableFoods.map {
-                        if (it.food == event.food) {
+                        if(it.food == event.food) {
                             it.copy(isExpanded = !it.isExpanded)
                         } else it
                     }
+                )
+            }
+            is SearchEvent.OnSearchFocusChange -> {
+                state = state.copy(
+                    isHintVisible = !event.isFocused && state.query.isBlank()
                 )
             }
             is SearchEvent.OnTrackFoodClick -> {
@@ -72,10 +72,12 @@ class SearchViewModel @Inject constructor(
                 trackableFoods = emptyList()
             )
             trackerUseCases
-                .searchFood(query = state.query)
+                .searchFood(state.query)
                 .onSuccess { foods ->
                     state = state.copy(
-                        trackableFoods = foods.map { TrackableFoodUiState(food = it) },
+                        trackableFoods = foods.map {
+                            TrackableFoodUiState(it)
+                        },
                         isSearching = false,
                         query = ""
                     )
