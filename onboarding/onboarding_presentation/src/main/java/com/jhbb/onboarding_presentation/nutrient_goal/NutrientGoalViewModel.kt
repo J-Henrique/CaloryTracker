@@ -7,11 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jhbb.core.domain.preferences.Preferences
 import com.jhbb.core.domain.use_case.FilterOutDigits
-import com.jhbb.core.navigation.Route
 import com.jhbb.core.util.UiEvent
-import com.jhbb.core.util.UiText
 import com.jhbb.onboarding_domain.use_case.ValidateNutrients
-import com.plcoding.core.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -54,7 +51,7 @@ class NutrientGoalViewModel @Inject constructor(
                         preferences.saveProteinRatio(result.proteinRatio)
                         preferences.saveFatRatio(result.fatRatio)
                         viewModelScope.launch {
-                            _uiEvent.send(UiEvent.Navigate(Route.TRACKER_OVERVIEW))
+                            _uiEvent.send(UiEvent.Success)
                         }
                     }
                     is ValidateNutrients.Result.Error -> {
